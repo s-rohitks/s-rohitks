@@ -3,7 +3,7 @@
 <img align ="right" src="coding2.gif" alt="coding1"  width="400" height="auto">
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=itz-predator&label=Profile%20views&color=0e75b6&style=flat" alt="itz-predator" /> </p>
 
-- 👨‍💻 SAP ABAP/BTP Developer
+- 👨‍💻 SAP ABAP Developer
 
 - 🌱 Learning Never Ends..........
 
