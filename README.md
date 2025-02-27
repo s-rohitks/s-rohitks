@@ -1,5 +1,4 @@
-![Banner](Banner1.png)
-# Hi! <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Hi.gif" width="35" />
+<img src="images/svc/header_en.svg"></img>
 <p align="right"> <img src="https://komarev.com/ghpvc/?username=itz-predator&label=Profile%20views&color=0e75b6&style=flat" alt="itz-predator" /> </p>
 <p align="center">
 <a href="https://linkedin.com/in/rohitks1" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" alt="rohitks1" height="30" width="30" /></a>&nbsp;
