@@ -1,16 +1,36 @@
 ![Banner](Banner1.png)
-<h1 align="center">Hi 👋</h1>
-<img align ="right" src="coding2.gif" alt="coding1"  width="400" height="auto">
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=itz-predator&label=Profile%20views&color=0e75b6&style=flat" alt="itz-predator" /> </p>
+# Hi! <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Hi.gif" width="35" />
+<p align="right"> <img src="https://komarev.com/ghpvc/?username=itz-predator&label=Profile%20views&color=0e75b6&style=flat" alt="itz-predator" /> </p>
+<p align="center">
+<a href="https://linkedin.com/in/rohitks1" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" alt="rohitks1" height="30" width="30" /></a>&nbsp;
+</p>
 
-- 👨‍💻 SAP ABAP Developer
-
-- 🌱 Learning Never Ends..........
-
-- 👨‍💻 All of my projects are available at [https://itz-predator.github.io/rohit-vns/](https://itz-predator.github.io/rohit-vns/)
-
+### <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif" width="45" /> About Me:
+<p align="left">
+-👨‍💻 Currently working at Wipro Technologies, from May 2022 as an SAP ABAP Developer.</p>
+<p align="left">
+-👨‍💻 Having around 3 years of experience in IT with expertise in SAP ABAP.</p>
+<p align="left">
+-👨‍💻 Worked on development and support Projects.</p>
+<p align="left">
+-👨‍💻 Working in support Areas in MM and SD.</p>
+<p align="left">
+-👨‍💻 Working Experience in Data Dictionary objects.</p>
+<p align="left">
+-👨‍💻 Excellent Working experience in generating Reports (Classical, Interactive, ALV).</p>
+<p align="left">
+-👨‍💻 Ability to work independently and with distributed teams.</p>
+<p align="left">
+-👨‍💻 Innovative individual with ability to identify, analyze and solve problems to increase customer satisfaction.</p>
+<p align="left">
+-👨‍💻 Enthusiastic in learning New Dimension Technology in SAP.</p>
+<p align="left">
+-👨‍💻 Possess the ability to learn new techniques and technology with ease.</p>
+<p align="left">
+- 👨‍💻 All of my projects are available at [https://itz-predator.github.io/rohit-vns/](https://itz-predator.github.io/rohit-vns/)</p>
+<p align="left">
 - 📫 How to reach me **https://www.linkedin.com/in/rohitks1/**
-
+</p>
 
 ## 🛠 &nbsp;Tech Stack
 
