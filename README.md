@@ -27,11 +27,7 @@
 -👨‍💻 Enthusiastic in learning New Dimension Technology in SAP.</p>
 <p align="left">
 -👨‍💻 Possess the ability to learn new techniques and technology with ease.</p>
-<p align="left">
-- 👨‍💻 All of my projects are available at [https://itz-predator.github.io/rohit-vns/](https://itz-predator.github.io/rohit-vns/)</p>
-<p align="left">
-- 📫 How to reach me **https://www.linkedin.com/in/rohitks1/**
-</p>
+
 
 ## 🛠 &nbsp;Tech Stack
 <div>
