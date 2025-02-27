@@ -180,7 +180,7 @@ g.typingUnderline rect {
   <animate attributeName="d" from="m38,-6 h0" to="m38,-6 h100" dur="9.4s" begin="0s" fill="freeze"/>
 </path>
 
-<text font-family="Courier New" font-size=".22em" fill="white"
+<text font-family="Roboto" font-size=".22em" fill="white"
       font-weight="bold" letter-spacing="2">
   <textPath xlink:href="#nameTyping" >
       Rohit Singh
@@ -198,7 +198,7 @@ g.typingUnderline rect {
            dur="5.8s" begin="0s" fill="freeze"/>
 </path>
 
-<text x="64" font-family="Helvetica" font-size=".12em" fill="white"
+<text x="64" font-family="Helvetica" font-size=".12em" fill="black"
      text-anchor="end" alignment-baseline="hanging" font-style="italic" > 
   <textPath xlink:href="#descriptionTyping" >
       SAP ABAP Developer
@@ -206,12 +206,12 @@ g.typingUnderline rect {
 </text>
 
 <text x="2" y="12" font-family="Helvetica" font-size=".22em" 
-      fill="#AAA" font-weight="bold"> 
+      fill="#00F" font-weight="bold"> 
       Hi there!
 </text>
 
 <text x="22" y="12" font-family="Helvetica" font-size=".22em"
-      fill="#AAA" font-weight="bold"> 
+      fill="#00F" font-weight="bold"> 
       How are you doing?
 </text>
 
