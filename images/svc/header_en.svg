@@ -198,7 +198,7 @@ g.typingUnderline rect {
            dur="5.8s" begin="0s" fill="freeze"/>
 </path>
 
-<text x="64" font-family="Helvetica" font-size=".12em" fill="black"
+<text x="64" font-family="Helvetica" font-size=".12em" fill="white"
      text-anchor="end" alignment-baseline="hanging" font-style="italic" > 
   <textPath xlink:href="#descriptionTyping" >
       SAP ABAP Developer
@@ -206,12 +206,12 @@ g.typingUnderline rect {
 </text>
 
 <text x="2" y="12" font-family="Helvetica" font-size=".22em" 
-      fill="#00F" font-weight="bold"> 
+      fill="#FF0000" font-weight="bold"> 
       Hi there!
 </text>
 
 <text x="22" y="12" font-family="Helvetica" font-size=".22em"
-      fill="#00F" font-weight="bold"> 
+      fill="#FF0000" font-weight="bold"> 
       How are you doing?
 </text>
 
