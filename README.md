@@ -7,8 +7,6 @@
 ### <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif" width="45" /> About Me:
 <img align ="right" src="coding2.gif" alt="coding1"  width="250" height="auto">
 <p align="left">
-- <img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30"> Currently working at Wipro Technologies, from May 2022 as an SAP ABAP Developer.</p>
-<p align="left">
 -👨‍💻 Having around 3 years of experience in IT with expertise in SAP ABAP.</p>
 <p align="left">
 -👨‍💻 Worked on development and support Projects.</p>
