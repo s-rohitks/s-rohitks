@@ -207,7 +207,7 @@ g.typingUnderline rect {
   </textPath>
 </text>
 
-<text x="2" y="12" font-family="Georgia" font-size=".22em" 
+<text x="0.5" y="12" font-family="Georgia" font-size=".22em" 
       fill="#FF0000" font-weight="bold"> 
       Hi there!
 </text>
