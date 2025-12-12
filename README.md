@@ -7,7 +7,7 @@
 ### <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif" width="45" /> About Me:
 <img align ="right" src="coding2.gif" alt="coding1"  width="250" height="auto">
 <p align="left">
--<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">  Currently working at International Tractors Limited, from May 2025 as an SAP S4 ABAP/Fiori Developer. </p>
+-<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">  Currently working at International Tractors Limited, as an SAP S4 ABAP/Fiori Developer. </p>
 <p align="left">
 -👨‍💻 Having around 3.5+ years of experience in IT with expertise in SAP S4 ABAP/Fiori.</p>
 <p align="left">
