@@ -1,27 +1,57 @@
 <img src="images/svc/header_en.svg"></img>
-<p align="right"> <img src="https://komarev.com/ghpvc/?username=itz-predator&label=Profile%20views&color=0e75b6&style=flat" alt="itz-predator" /> </p>
-<p align="center">
-<a href="https://linkedin.com/in/rohitks1" target="blank"><img align="center" src="https://cdn.jsdelivr.net/npm/simple-icons@3.0.1/icons/linkedin.svg" alt="rohitks1" height="30" width="30" /></a>&nbsp;
+<img align ="right" src="coding2.gif" alt="coding1"  width="250" height="auto">
+<p>
+  <img src="https://img.shields.io/badge/ABAP-blue?style=for-the-badge&logo=abap" alt="ABAP" />
+  <img src="https://img.shields.io/badge/Fiori-SAPUI5-0072C6?style=for-the-badge" alt="Fiori" />
+  <img src="https://img.shields.io/badge/RAP-orange?style=for-the-badge" alt="RAP" />
+  <img src="https://img.shields.io/badge/OData-CDS-success?style=for-the-badge" alt="OData/CDS" />
 </p>
 
-### <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif" width="45" /> About Me:
-<img align ="right" src="coding2.gif" alt="coding1"  width="250" height="auto">
-<p align="left">
--<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">  Currently working at International Tractors Limited, as an SAP S4 ABAP/Fiori Developer. </p>
-<p align="left">
--👨‍💻 Having around 3.5+ years of experience in IT with expertise in SAP S4 ABAP/Fiori.</p>
-<p align="left">
--👨‍💻 Expertise in Creating Custom Fiori Apps from scratch.</p>
-<p align="left">
--👨‍💻 Expertise in creating RAP ABAP Reports / Fiori List Report.</p>
-<p align="left">
--👨‍💻 Ability to work independently and with distributed teams.</p>
-<p align="left">
--👨‍💻 Innovative individual with ability to identify, analyze and solve problems to increase customer satisfaction.</p>
-<p align="left">
--👨‍💻 Enthusiastic in learning New Dimension Technology in SAP.</p>
-<p align="left">
--👨‍💻 Possess the ability to learn new techniques and technology with ease.</p>
+[![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=SAP+S/4HANA+ABAP+%2F+Fiori+Developer;Custom+Fiori+Apps;RAP+ABAP+Reports;Problem+Solver&font=Fira+Code&center=true&width=500&height=30)]()
+
+## About Me
+<!-- Use colorful emoji accents to create multi-colored effect (safe and supported on GitHub) -->
+🟦 I’m an SAP S/4HANA ABAP & Fiori Developer at **International Tractors Limited** with **3.5+ years** of professional experience.  
+🟩 I build clean, maintainable SAP solutions — from custom Fiori applications to RAP-based ABAP reports — and enjoy turning complex requirements into smooth user experiences.  
+🟨 I focus on customer satisfaction, performance, and developer-friendly architectures.
+
+- 💼 Current: **SAP S/4 ABAP / Fiori Developer** — International Tractors Limited  
+- 🧭 Experience: ~3.5+ years in SAP development  
+- ⚡ Strengths: Independent contributor, distributed-team collaborator, fast learner, proactive problem solver  
+- 🎯 Focus: Delivering customer-centric, performant SAP Fiori apps and RAP ABAP reports
+
+---
+
+
+## Core Expertise
+- SAP S/4HANA ABAP
+- SAP Fiori application development
+- Creating custom Fiori apps from scratch
+- RAP ABAP Reports / Fiori List Report
+- Working effectively with distributed teams
+- Rapidly learning new SAP technologies and techniques
+
+## What I Build / Typical Work
+- Custom SAP Fiori apps with delightful UX and solid backend integration
+- RAP-based ABAP reports and Fiori List Report implementations
+- OData/CDS service integrations (designing services for Fiori consumption)
+- Reusable ABAP artifacts and modular code to increase maintainability
+- End-to-end features: functional spec → design → implementation → test → transport
+## How I Work
+- I prefer clear, reproducible requirements and small iterative deliveries.
+- I write readable ABAP code with comments and maintainable UI5 components.
+- I include basic tests and validation where feasible and document key design decisions.
+- I collaborate well asynchronously and across time zones.
+## GitHub Stats
+![GitHub stats](https://github-readme-stats.vercel.app/api?username=itz-predator&show_icons=true&theme=radical)
+![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=itz-predator&layout=compact&theme=radical)
+
+---
+
+## Get in Touch
+I’m open to collaboration and knowledge-sharing. Share your project or question — I’ll respond promptly.
+
+Thank you for visiting my profile — feel free to browse my repositories, open an issue on a project, or reach out directly.
 
 
 ## 🛠 &nbsp;Tech Stack
