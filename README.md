@@ -7,17 +7,13 @@
 ### <img src="https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Developer.gif" width="45" /> About Me:
 <img align ="right" src="coding2.gif" alt="coding1"  width="250" height="auto">
 <p align="left">
--<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">  Currently working at International Tractors Limited, from May 2025 as an SAP ABAP Developer. </p>
+-<img src="https://media.giphy.com/media/WUlplcMpOCEmTGBtBW/giphy.gif" width="30">  Currently working at International Tractors Limited, from May 2025 as an SAP S4 ABAP/Fiori Developer. </p>
 <p align="left">
--👨‍💻 Having around 3 years of experience in IT with expertise in SAP ABAP.</p>
+-👨‍💻 Having around 3.5+ years of experience in IT with expertise in SAP S4 ABAP/Fiori.</p>
 <p align="left">
--👨‍💻 Worked on development and support Projects.</p>
+-👨‍💻 Expertise in Creating Custom Fiori Apps from scratch.</p>
 <p align="left">
--👨‍💻 Working in support Areas in MM and SD.</p>
-<p align="left">
--👨‍💻 Working Experience in Data Dictionary objects.</p>
-<p align="left">
--👨‍💻 Excellent Working experience in generating Reports (Classical, Interactive, ALV).</p>
+-👨‍💻 Expertise in creating RAP ABAP Reports / Fiori List Report.</p>
 <p align="left">
 -👨‍💻 Ability to work independently and with distributed teams.</p>
 <p align="left">
