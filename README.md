@@ -56,6 +56,10 @@ Thank you for visiting my profile — feel free to browse my repositories, open 
 
 ## 🛠 &nbsp;Tech Stack
 <div>
+  <img src="https://img.shields.io/badge/SAP-S4HANA-0db7ed?style=flat-square" />&nbsp;
+  <img src="https://img.shields.io/badge/ABAP-4B0082?style=flat-square" /> &nbsp;
+  <img src="https://img.shields.io/badge/SAPUI5-Fiori-0072C6?style=flat-square" />&nbsp;
+  <img src="https://img.shields.io/badge/CDS-OData-2b9348?style=flat-square" />&nbsp;
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" title="C++" alt="C++" width="40" height="40"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/java/java-original-wordmark.svg" title="Java" alt="Java" width="40" height="40"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original-wordmark.svg" title="React" alt="React" width="40" height="40"/>&nbsp;
