@@ -43,6 +43,7 @@
 - I include basic tests and validation where feasible and document key design decisions.
 - I collaborate well asynchronously and across time zones.
 ## GitHub Stats
+
 ![GitHub stats](https://github-readme-stats.vercel.app/api?username=itz-predator&show_icons=true&theme=radical)
 ![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=itz-predator&layout=compact&theme=radical)
 
