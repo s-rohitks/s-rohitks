@@ -44,8 +44,8 @@
 - I collaborate well asynchronously and across time zones.
 ## GitHub Stats
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=itz-predator&show_icons=true&theme=radical&cache_seconds=1800)
-![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=itz-predator&layout=compact&theme=radical&cache_seconds=1800)
+![GitHub stats](https://github-readme-stats-mocha-eight-31.vercel.app/api?username=itz-predator&show_icons=true&theme=radical&cache_seconds=1800)
+![Top Langs](https://github-readme-stats-mocha-eight-31.vercel.app/api/top-langs/?username=itz-predator&layout=compact&theme=radical&cache_seconds=1800)
 
 ---
 
