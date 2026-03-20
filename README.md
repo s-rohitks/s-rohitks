@@ -16,7 +16,7 @@
 🟨 I focus on customer satisfaction, performance, and developer-friendly architectures.
 
 - 💼 Current: **SAP S/4 ABAP / Fiori Developer** — International Tractors Limited  
-- 🧭 Experience: ~4+ years in SAP development  
+- 🧭 Experience: ~4+ years in SAP S4 ABAP/Fiori development  
 - ⚡ Strengths: Independent contributor, distributed-team collaborator, fast learner, proactive problem solver  
 - 🎯 Focus: Delivering customer-centric, performant SAP Fiori apps and RAP ABAP reports
 
