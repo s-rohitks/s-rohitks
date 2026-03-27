@@ -11,7 +11,7 @@
 
 ## About Me
 <!-- Use colorful emoji accents to create multi-colored effect (safe and supported on GitHub) -->
-🟦 I’m an SAP S/4HANA ABAP & Fiori Developer at **International Tractors Limited** with **3.5+ years** of professional experience.  
+🟦 I’m an SAP S/4HANA ABAP & Fiori Developer at **International Tractors Limited** with **~4+ years** of professional experience.  
 🟩 I build clean, maintainable SAP solutions — from custom Fiori applications to RAP-based ABAP reports — and enjoy turning complex requirements into smooth user experiences.  
 🟨 I focus on customer satisfaction, performance, and developer-friendly architectures.
 
