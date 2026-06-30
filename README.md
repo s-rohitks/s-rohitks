@@ -1,4 +1,4 @@
-<img src="images/svc/header_en.svg"></img>
+<img src="images/svc/header_en.svg">
 <img align="right" src="coding2.gif" alt="coding1" width="250" height="auto">
 
 <p>
