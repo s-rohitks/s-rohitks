@@ -104,6 +104,7 @@ if MOCK:
     avatar_data_uri = ""
     followers = 42
     public_repos = 15
+    private_repos = 4
     stars = 3
     forks = 0
     public_gists = 1
@@ -123,11 +124,20 @@ if MOCK:
         d = today - timedelta(days=139 - i)
         days.append({"date": d.strftime("%Y-%m-%d"), "contributionCount": max(0, int(random.random() * 6 - 1.2))})
 else:
-    user = fetch_json(f"https://api.github.com/users/{USERNAME}")
+    # /users/{username} only ever returns public data, even with a token.
+    # To see private repo counts we must call /user (the authenticated-as-yourself
+    # endpoint), which only works because GH_TOKEN belongs to USERNAME and has
+    # the `repo` scope (classic PAT) or "Repository: Metadata (Read)" +
+    # "Repository: Read" for private repos (fine-grained PAT).
+    if TOKEN:
+        user = fetch_json("https://api.github.com/user")
+        repos = fetch_json("https://api.github.com/user/repos?per_page=100&affiliation=owner")
+    else:
+        user = fetch_json(f"https://api.github.com/users/{USERNAME}")
+        repos = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100")
+
     if not isinstance(user, dict):
         raise SystemExit(f"Expected user object from GitHub API, got {type(user).__name__}")
-
-    repos = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100")
     if not isinstance(repos, list):
         raise SystemExit(f"Expected repository list from GitHub API, got {type(repos).__name__}")
 
@@ -182,6 +192,10 @@ else:
     forks = sum(int(repo.get("forks_count", 0)) for repo in repos)
     public_gists = int(user.get("public_gists", 0))
     public_repos = int(user.get("public_repos", 0))
+    # total_private_repos only appears when authenticated as the token owner
+    # with the `repo` scope; otherwise it's simply absent, so this is a safe
+    # default rather than a sign of an error.
+    private_repos = int(user.get("total_private_repos", 0))
 
     languages_totals = {}
     for node in profile["repositories"]["nodes"]:
@@ -240,6 +254,7 @@ ICONS = {
     "flame": '<path d="M9 1.8c.4 2 2 2.7 2 4.9 0 1-.5 1.7-1.1 2.1.9-.2 1.9-1 1.9-2.5 1.6 1.6 2.4 3.3 2.4 5 0 3-2.3 5.2-5.2 5.2S3.8 14.3 3.8 11.3c0-2.6 1.4-4.2 2.7-5.7-.1.9.2 1.7.9 2.1-.3-2.8 1-4.4 1.6-5.9z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>',
     "trophy": '<path d="M6 3h6v4a3 3 0 0 1-6 0V3z" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M6 4H4a2 2 0 0 0 2 3M12 4h2a2 2 0 0 1-2 3" fill="none" stroke="currentColor" stroke-width="1.1"/><path d="M9 10v2M6.5 15h5M7.2 12.5h3.6l.4 2.5H6.8z" fill="none" stroke="currentColor" stroke-width="1.1"/>',
     "gist": '<path d="M5.5 4L2 9l3.5 5M12.5 4L16 9l-3.5 5M10 3l-2 12" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>',
+    "lock": '<rect x="4" y="8" width="10" height="7.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M6 8V5.6a3 3 0 0 1 6 0V8" fill="none" stroke="currentColor" stroke-width="1.3"/><circle cx="9" cy="11.5" r="0.9" fill="currentColor"/>',
 }
 
 
@@ -266,12 +281,11 @@ def tile(x, y, w, h, name, label, value):
 
 
 tiles_data = [
-    ("repo", "Repositories", public_repos),
+    ("repo", "Public Repos", public_repos),
+    ("lock", "Private Repos", private_repos),
     ("commit", "Commits", commit_count),
     ("pr", "Pull Requests", pr_count),
     ("issue", "Issues", issue_count),
-    ("people", "Followers", followers),
-    ("fork", "Forks", forks),
     ("review", "Reviews", review_count),
     ("gist", "Gists", public_gists),
 ]
@@ -400,15 +414,15 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
   <text x="{grid_x0}" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="{text_subtle}">OVERVIEW</text>
   {tiles_svg}
 
-  <text x="{grid_x0}" y="{grid_y0 + 2*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="{text_main}">{total_contributions:,}</text>
-  <text x="{grid_x0 + 100}" y="{grid_y0 + 2*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" fill="{text_subtle}">total contributions in the last year</text>
+  <text x="{grid_x0}" y="{grid_y0 + rows*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="{text_main}">{total_contributions:,}</text>
+  <text x="{grid_x0 + 100}" y="{grid_y0 + rows*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" fill="{text_subtle}">total contributions in the last year</text>
 
   {lang_bar_svg}
   {legend_svg}
 </svg>'''
 
 os.makedirs("assets", exist_ok=True)
-out_path = "assets/preview-github-stats.svg" if MOCK else "assets/github-stats.svg"
+out_path = f"assets/preview-github-stats-{THEME}.svg" if MOCK else f"assets/github-stats-{THEME}.svg"
 with open(out_path, "w", encoding="utf-8") as f:
     f.write(svg)
 print(f"Generated {out_path}")
