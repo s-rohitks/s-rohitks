@@ -136,7 +136,7 @@ svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" role=
     {THEME.upper()}
   </text>
 
-  <image href="{escape(avatar_url)}" x="567" y="34" width="96" height="96" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)" image-rendering="optimizeQuality"/>
+  <image href="{avatar_data_uri}" x="567" y="34" width="96" height="96" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)" image-rendering="optimizeQuality"/>
   <circle cx="615" cy="82" r="50" fill="none" stroke="url(#accent)" stroke-width="5"/>
   <circle cx="615" cy="82" r="43" fill="none" stroke="{stroke}" stroke-width="1.5" opacity="0.65"/>
 
