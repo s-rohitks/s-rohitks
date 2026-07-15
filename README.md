@@ -87,7 +87,11 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" title="GitHub" alt="GitHub" width="40" height="40"/>&nbsp;
 </div>
 
-<img src="assets/github-stats.svg" alt="GitHub Stats" width="650" />
+
+
+## My GitHub Stats
+
+![GitHub Stats](https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats.svg)
 
 ---
 
