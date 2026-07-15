@@ -33,6 +33,30 @@ def fetch_json(url: str):
     return payload
 
 
+# Graph QL Fetch
+def graphql(query: str, variables=None):
+    response = requests.post(
+        "https://api.github.com/graphql",
+        headers=headers,
+        json={
+            "query": query,
+            "variables": variables or {}
+        },
+        timeout=30,
+    )
+
+    print("GraphQL:", response.status_code)
+
+    response.raise_for_status()
+
+    data = response.json()
+
+    if "errors" in data:
+        raise RuntimeError(data["errors"])
+
+    return data["data"]
+
+
 # Fetch user information
 user = fetch_json(f"https://api.github.com/users/{USERNAME}")
 if not isinstance(user, dict):
@@ -43,10 +67,18 @@ repos = fetch_json(f"https://api.github.com/users/{USERNAME}/repos?per_page=100"
 if not isinstance(repos, list):
     raise SystemExit(f"Expected repository list from GitHub API, got {type(repos).__name__}")
 
-# Fetch public events to estimate streak and contributions
-public_events = fetch_json(f"https://api.github.com/users/{USERNAME}/events/public?per_page=100")
-if not isinstance(public_events, list):
-    raise SystemExit(f"Expected public events list from GitHub API, got {type(public_events).__name__}")
+query = """
+query($login: String!) {
+  user(login: $login) {
+    login
+  }
+}
+"""
+
+result = graphql(query, {"login": USERNAME})
+
+print(result)
+
 
 # Calculate totals
 stars = sum(int(repo.get("stargazers_count", 0)) for repo in repos)
@@ -66,10 +98,6 @@ if avatar_url:
     content_type = avatar_response.headers.get("Content-Type", "image/png")
 
     avatar_data_uri = f"data:{content_type};base64,{avatar_b64}"
-
-# Estimate contributions and streak from public push events
-push_events = [event for event in public_events if event.get("type") == "PushEvent"]
-total_contributions = sum(len(event.get("payload", {}).get("commits", [])) for event in push_events)
 
 # Compute consecutive streak of push days
 push_days = []
