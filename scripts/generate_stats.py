@@ -145,13 +145,13 @@ else:
           totalPullRequestContributions
           totalPullRequestReviewContributions
         }
-      }
-      repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
-        nodes {
-          name
-          stargazerCount
-          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
-            edges { size node { name } }
+        repositories(first: 100, ownerAffiliations: OWNER, isFork: false) {
+          nodes {
+            name
+            stargazerCount
+            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+              edges { size node { name } }
+            }
           }
         }
       }
@@ -184,7 +184,7 @@ else:
     public_repos = int(user.get("public_repos", 0))
 
     languages_totals = {}
-    for node in result["repositories"]["nodes"]:
+    for node in profile["repositories"]["nodes"]:
         for edge in node["languages"]["edges"]:
             name = edge["node"]["name"]
             languages_totals[name] = languages_totals.get(name, 0) + edge["size"]
