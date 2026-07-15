@@ -1,40 +1,37 @@
 name: Update GitHub Stats
-
 on:
   workflow_dispatch:
-
   schedule:
     - cron: "0 0 * * *"
   push:
     paths:
       - "scripts/generate_stats.py"
-
 permissions:
   contents: write
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Install dependencies
         run: pip install requests
-
-      - name: Generate stats
+      - name: Generate stats (dark)
         run: python scripts/generate_stats.py
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          THEME: ${{ vars.STATS_THEME }}
-
+          THEME: dark
+      - name: Generate stats (light)
+        run: python scripts/generate_stats.py
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+          THEME: light
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
