@@ -1,4 +1,5 @@
 import os
+import base64
 from datetime import datetime, timedelta
 from html import escape
 
@@ -53,6 +54,18 @@ forks = sum(int(repo.get("forks_count", 0)) for repo in repos)
 public_gists = int(user.get("public_gists", 0))
 public_repos = int(user.get("public_repos", 0))
 avatar_url = user.get("avatar_url", "")
+
+avatar_data_uri = ""
+
+if avatar_url:
+    avatar_response = requests.get(avatar_url, timeout=30)
+    avatar_response.raise_for_status()
+
+    avatar_b64 = base64.b64encode(avatar_response.content).decode("utf-8")
+
+    content_type = avatar_response.headers.get("Content-Type", "image/png")
+
+    avatar_data_uri = f"data:{content_type};base64,{avatar_b64}"
 
 # Estimate contributions and streak from public push events
 push_events = [event for event in public_events if event.get("type") == "PushEvent"]
