@@ -91,7 +91,11 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
 
 ## My GitHub Stats
 
-![GitHub Stats](https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats.svg)
+<p>
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-light.svg">
+  <img alt="GitHub Stats" src="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-dark.svg">
+</p>
 
 ---
 
