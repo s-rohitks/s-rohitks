@@ -87,17 +87,7 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original-wordmark.svg" title="GitHub" alt="GitHub" width="40" height="40"/>&nbsp;
 </div>
 
-### <img src='https://media1.giphy.com/media/du3J3cXyzhj75IOgvA/giphy.gif?cid=ecf05e47x2g034i9pzwtzzsd3xgg2w9nr94t4tflbbgo3008&rid=giphy.gif' width='25' /> My GitHub Stats:
-
-<div align="center">
-
 <img src="assets/github-stats.svg" alt="GitHub Stats" width="650" />
-
-![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=s-rohitks&theme=dracula)
-![](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=s-rohitks&theme=dracula)
-![](https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=s-rohitks&theme=dracula)
-
-</div>
 
 ---
 
