@@ -91,6 +91,8 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
 
 <div align="center">
 
+<img src="assets/github-stats.svg" alt="GitHub Stats" width="650" />
+
 ![](https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=s-rohitks&theme=dracula)
 ![](https://github-profile-summary-cards.vercel.app/api/cards/repos-per-language?username=s-rohitks&theme=dracula)
 ![](https://github-profile-summary-cards.vercel.app/api/cards/most-commit-language?username=s-rohitks&theme=dracula)
