@@ -63,7 +63,7 @@
 ## Get in Touch
 
 📧 [rohitks.vns@gmail.com](mailto:rohitks.vns@gmail.com)
-🔗 [linkedin.com/in/rohitks1](https://linkedin.com/in/rohitks1)
+🔗 [linkedin.com/in/s-rohitks](https://linkedin.com/in/s-rohitks)
 🐙 [github.com/s-rohitks](https://github.com/s-rohitks)
 
 I'm open to collaboration and knowledge-sharing — feel free to browse my repos, open an issue, or reach out directly.
