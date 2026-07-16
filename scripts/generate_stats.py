@@ -279,7 +279,6 @@ def tile(x, y, w, h, name, label, value):
 
 
 tiles_data = [
-    ("star", "Stars", stars),
     ("repo", "Public Repos", public_repos),
     ("lock", "Private Repos", private_repos),
     ("commit", "Commits", commit_count),
