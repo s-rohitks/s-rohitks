@@ -94,10 +94,11 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-dark.svg">
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-light.svg">
+  <img src="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-light.svg" alt="GitHub Stats">
 </picture>
 
 ---
 
 ### <img align='center' src='https://media2.giphy.com/media/UQDSBzfyiBKvgFcSTw/giphy.gif?cid=ecf05e47p3cd513axbek3f56ti3jzizq8hincw20jauyyfyw&rid=giphy.gif' width='29' /> Here's some humor for you:
 
-<img src="https://readme-jokes.vercel.app/api" alt="Error fetching resource, Refresh again to view Jokes Card" width='600' />
+<img src="https://readme-jokes.vercel.app/api" alt="Error fetching resource, Refresh again to view Jokes Card" width='900' />
