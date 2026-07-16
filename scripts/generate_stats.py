@@ -406,7 +406,6 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
   {icon("trophy", name_x + 145, 122, 16, "#facc15")}
   <text x="{name_x + 160}" y="127" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="{text_main}"><tspan font-weight="700">{longest_streak}</tspan> day best</text>
 
-  <text x="{W-32}" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="{text_subtle}" text-anchor="end">{weeks_back} week activity</text>
   {heat_svg}
 
   <line x1="30" y1="152" x2="{W-30}" y2="152" stroke="{stroke}" stroke-width="1"/>
