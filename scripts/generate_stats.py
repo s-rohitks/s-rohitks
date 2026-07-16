@@ -169,7 +169,6 @@ else:
     """
     result = graphql(query, {"login": USERNAME})
     profile = result["user"]
-    followers = profile["followers"]["totalCount"]
     collection = profile["contributionsCollection"]
     calendar = collection["contributionCalendar"]
     total_contributions = calendar["totalContributions"]
@@ -212,7 +211,6 @@ else:
         content_type = avatar_response.headers.get("Content-Type", "image/png")
         avatar_data_uri = f"data:{content_type};base64,{avatar_b64}"
 
-print(f"Followers      : {followers}")
 print(f"Repositories   : {public_repos}")
 print(f"Stars          : {stars}")
 print(f"Contributions  : {total_contributions}")
@@ -273,7 +271,7 @@ def esc(s):
 # ---------------------------------------------------------------------------
 def tile(x, y, w, h, name, label, value):
     return f'''
-  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="{tile_bg}" stroke="{stroke}"/>
+  <rect x="{x}" y="{y}" width="{w}" height="{h}" rx="10" fill="{tile_bg}" stroke="none"/>
   {icon(name, x + 22, y + h/2, 18, accent_start)}
   <text x="{x + 40}" y="{y + h/2 - 6}" font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="{text_subtle}">{esc(label)}</text>
   <text x="{x + 40}" y="{y + h/2 + 16}" font-family="Segoe UI, Arial, sans-serif" font-size="21" font-weight="700" fill="{text_main}">{esc(value)}</text>
@@ -281,6 +279,7 @@ def tile(x, y, w, h, name, label, value):
 
 
 tiles_data = [
+    ("star", "Stars", stars),
     ("repo", "Public Repos", public_repos),
     ("lock", "Private Repos", private_repos),
     ("commit", "Commits", commit_count),
@@ -332,7 +331,7 @@ for i, (name, size) in enumerate(top_langs):
 lang_bar_svg = f'''
   <clipPath id="langClip"><rect x="{lang_bar_x}" y="{lang_bar_y}" width="{lang_bar_w}" height="{lang_bar_h}" rx="7"/></clipPath>
   <g clip-path="url(#langClip)">{segments_svg}</g>
-  <text x="{lang_bar_x}" y="{lang_bar_y - 10}" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="{text_subtle}">MOST USED LANGUAGES</text>
+  <text x="{lang_bar_x}" y="{lang_bar_y - 10}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="{text_main}">Languages</text>
 '''
 
 # ---------------------------------------------------------------------------
@@ -345,8 +344,9 @@ start = today - timedelta(days=today.weekday())  # this week's Monday
 start -= timedelta(weeks=weeks_back - 1)
 max_count = max([v for v in day_map.values()] + [1])
 
-heat_x0, heat_y0 = W - 32 - weeks_back * 13, 40
-cell = 10
+heat_x0, heat_y0 = W - 46 - weeks_back * (11 + 2), 48
+cell = 11
+gap = 2
 heat_svg = ""
 for w in range(weeks_back):
     for d_i in range(7):
@@ -354,17 +354,25 @@ for w in range(weeks_back):
         if day > today:
             continue
         count = day_map.get(day, 0)
-        t = 0 if max_count == 0 else min(count / max_count, 1)
-        if count == 0:
-            fill = tile_bg
+        if THEME == "dark":
+            colors = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353"]
         else:
-            # interpolate between accent_start (low) and accent_end (high) opacity via alpha steps
-            alpha = 0.35 + 0.65 * t
-            fill = accent_start
-        opacity = 1 if count == 0 else round(0.35 + 0.65 * t, 2)
-        x = heat_x0 + w * 13
-        y = heat_y0 + d_i * 13
-        heat_svg += f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="2.5" fill="{fill}" opacity="{opacity}" stroke="{stroke}" stroke-width="0.5"/>'
+            colors = ["#ebedf0", "#9be9a8", "#40c463", "#30a14e", "#216e39"]
+
+        if count == 0:
+            fill = colors[0]
+        elif count <= 2:
+            fill = colors[1]
+        elif count <= 5:
+            fill = colors[2]
+        elif count <= 9:
+            fill = colors[3]
+        else:
+            fill = colors[4]
+
+        x = heat_x0 + w * (cell + gap)
+        y = heat_y0 + d_i * (cell + gap)
+        heat_svg += f'<rect x="{x}" y="{y}" width="{cell}" height="{cell}" rx="3.5" fill="{fill}" stroke="none"/>'
 
 # ---------------------------------------------------------------------------
 # Assemble final SVG
@@ -394,7 +402,7 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
   </defs>
 
   <rect width="{W}" height="{H}" rx="18" fill="url(#bg)"/>
-  <rect x="10" y="10" width="{W-20}" height="{H-20}" rx="16" fill="{card_bg}" stroke="{stroke}"/>
+  <rect x="10" y="10" width="{W-20}" height="{H-20}" rx="16" fill="{card_bg}" stroke="{stroke}" stroke-width="1"/>
   <rect x="30" y="28" width="140" height="5" rx="2.5" fill="url(#accent)"/>
 
   <text x="{name_x}" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="{text_main}">{esc(USERNAME)}</text>
@@ -406,9 +414,30 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
   {icon("trophy", name_x + 145, 122, 16, "#facc15")}
   <text x="{name_x + 160}" y="127" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="{text_main}"><tspan font-weight="700">{longest_streak}</tspan> day best</text>
 
+  <rect
+      x="{heat_x0-12}"
+      y="{heat_y0-12}"
+      width="{weeks_back*(cell+gap)+24}"
+      height="118"
+      rx="12"
+      fill="{tile_bg}"
+      opacity="0.55"
+      stroke="{stroke}"/>
+
+  <!-- Month labels -->
+  <text x="{heat_x0}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Mar</text>
+  <text x="{heat_x0+52}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Apr</text>
+  <text x="{heat_x0+104}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">May</text>
+  <text x="{heat_x0+156}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Jun</text>
+
+  <!-- Weekday labels -->
+  <text x="{heat_x0-18}" y="{heat_y0+11}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">M</text>
+  <text x="{heat_x0-18}" y="{heat_y0+37}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">W</text>
+  <text x="{heat_x0-18}" y="{heat_y0+63}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">F</text>
+
   {heat_svg}
 
-  <line x1="30" y1="152" x2="{W-30}" y2="152" stroke="{stroke}" stroke-width="1"/>
+  <line x1="30" y1="152" x2="{W-30}" y2="152" stroke="none"/>
 
   <text x="{grid_x0}" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="{text_subtle}">OVERVIEW</text>
   {tiles_svg}
