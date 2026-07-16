@@ -102,7 +102,6 @@ def lang_color(name, idx):
 if MOCK:
     USERNAME = USERNAME or "s-rohitks"
     avatar_data_uri = ""
-    followers = 42
     public_repos = 15
     private_repos = 4
     stars = 3
@@ -144,7 +143,6 @@ else:
     query = """
     query($login: String!) {
       user(login: $login) {
-        followers { totalCount }
         contributionsCollection {
           contributionCalendar {
             totalContributions
@@ -279,7 +277,6 @@ def tile(x, y, w, h, name, label, value):
 
 
 tiles_data = [
-    ("people", "Followers", followers),
     ("repo", "Public Repos", public_repos),
     ("lock", "Private Repos", private_repos),
     ("star", "Stars", stars),
