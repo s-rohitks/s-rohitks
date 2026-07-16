@@ -433,9 +433,9 @@ profile_section += f'''
   <text x="{profile_x + 32}" y="{profile_y + 165}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">India</text>
   {icon("commit", profile_x + 16, profile_y + 190, 14, text_subtle)}
   <text x="{profile_x + 32}" y="{profile_y + 195}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">Joined Jan 7, 2021</text>
-  <text x="{profile_x + 14}" y="{profile_y + 225}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">AI/ML Engineer passionate</text>
-  <text x="{profile_x + 14}" y="{profile_y + 240}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">about building intelligent</text>
-  <text x="{profile_x + 14}" y="{profile_y + 255}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">systems and developer tools.</text>
+  <text x="{profile_x + 14}" y="{profile_y + 225}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">SAP S/4HANA ABAP & Fiori Developer</text>
+  <text x="{profile_x + 14}" y="{profile_y + 240}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">CDS, OData, SAPUI5/Fiori, and BTP Launchpad configuration</text>
+  <text x="{profile_x + 14}" y="{profile_y + 255}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Exposure to RAP and ABAP Cloud concepts.</text>
 '''
 
 # Contributions header
