@@ -93,9 +93,9 @@ I'm open to collaboration and knowledge-sharing — feel free to browse my repos
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/github-stats-dark.svg">
-    <source media="(prefers-color-scheme: light)" srcset="assets/github-stats-light.svg">
-    <img alt="GitHub Stats" src="assets/github-stats-dark.svg" width="100%">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-light.svg">
+    <img src="https://raw.githubusercontent.com/s-rohitks/s-rohitks/predator/assets/github-stats-dark.svg" alt="GitHub Stats" width="100%">
   </picture>
 </p>
 
