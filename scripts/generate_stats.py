@@ -235,7 +235,7 @@ else:
     text_main, text_subtle, stroke = "#e6edf3", "#8b949e", "#30363d"
     accent_start, accent_end = "#58a6ff", "#3fb950"
 
-W, H = 820, 520
+W, H = 1200, 700
 
 # ---------------------------------------------------------------------------
 # Small inline icon set (18x18 viewbox, stroke-based, currentColor)
@@ -279,20 +279,29 @@ def tile(x, y, w, h, name, label, value):
 
 
 tiles_data = [
+    ("people", "Followers", followers),
     ("repo", "Public Repos", public_repos),
     ("lock", "Private Repos", private_repos),
-    ("commit", "Commits", commit_count),
-    ("pr", "Pull Requests", pr_count),
-    ("issue", "Issues", issue_count),
-    ("review", "Reviews", review_count),
+    ("star", "Stars", stars),
+    ("fork", "Forks", forks),
     ("gist", "Gists", public_gists),
 ]
 
-grid_x0, grid_y0 = 32, 190
-cols, rows = 4, 2
+# Left side profile area
+profile_x, profile_y = 32, 32
+profile_w, profile_h = 220, 280
+
+# Bottom sections (Activity Overview and Languages)
+activity_box_x, activity_box_y = 32, 360
+activity_box_w, activity_box_h = 560, 320
+
+lang_box_x, lang_box_y = 620, 360
+lang_box_w, lang_box_h = W - lang_box_x - 32, 320
+grid_x0, grid_y0 = 280, 32
+cols, rows = 3, 2
 gap = 14
-tile_w = (W - 64 - gap * (cols - 1)) / cols
-tile_h = 70
+tile_w = (W - 280 - 32 - gap * (cols - 1)) / cols
+tile_h = 110
 tiles_svg = ""
 for i, (ic, label, value) in enumerate(tiles_data):
     col, row = i % cols, i // cols
@@ -306,31 +315,29 @@ for i, (ic, label, value) in enumerate(tiles_data):
 top_langs = sorted(languages_totals.items(), key=lambda kv: kv[1], reverse=True)[:5]
 total_lang_size = sum(v for _, v in top_langs) or 1
 
-lang_bar_x, lang_bar_y, lang_bar_w, lang_bar_h = 32, 414, W - 64, 16
+lang_bar_h = 16
 segments_svg = ""
-cursor = lang_bar_x
+lang_bar_cursor = 0
 legend_svg = ""
-legend_x, legend_y = lang_bar_x, lang_bar_y + 44
-col_width = (W - 64) / 3
+legend_x, legend_y = lang_box_x + 32, lang_box_y + 70
 for i, (name, size) in enumerate(top_langs):
     pct = size / total_lang_size
-    seg_w = pct * lang_bar_w
+    seg_w = pct * (lang_box_w - 64)
     color = lang_color(name, i)
-    rx = "7" if i == 0 else "0"
-    segments_svg += f'<rect x="{cursor:.1f}" y="{lang_bar_y}" width="{max(seg_w,2):.1f}" height="{lang_bar_h}" fill="{color}"/>'
-    cursor += seg_w
-    lx = legend_x + (i % 3) * col_width
-    ly = legend_y + (i // 3) * 26
+    segments_svg += f'<rect x="{lang_box_x + 32 + lang_bar_cursor:.1f}" y="{lang_box_y + 50}" width="{max(seg_w,2):.1f}" height="{lang_bar_h}" fill="{color}"/>'
+    lang_bar_cursor += seg_w
+    lx = legend_x + i * 150
+    ly = legend_y
     legend_svg += f'''
   <circle cx="{lx+5}" cy="{ly-4}" r="5" fill="{color}"/>
-  <text x="{lx+16}" y="{ly}" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" fill="{text_main}">{esc(name)}</text>
-  <text x="{lx+16}" y="{ly+15}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">{pct*100:.1f}%</text>
+  <text x="{lx+16}" y="{ly}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_main}">{esc(name)}</text>
+  <text x="{lx+16}" y="{ly+15}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">{pct*100:.1f}% {size:,} bytes</text>
 '''
 # clip the whole bar to rounded corners
 lang_bar_svg = f'''
-  <clipPath id="langClip"><rect x="{lang_bar_x}" y="{lang_bar_y}" width="{lang_bar_w}" height="{lang_bar_h}" rx="7"/></clipPath>
+  <rect x="{lang_box_x + 32}" y="{lang_box_y + 50}" width="{lang_box_w - 64}" height="{lang_bar_h}" rx="6" fill="{tile_bg}" stroke="none"/>
+  <clipPath id="langClip"><rect x="{lang_box_x + 32}" y="{lang_box_y + 50}" width="{lang_box_w - 64}" height="{lang_bar_h}" rx="6"/></clipPath>
   <g clip-path="url(#langClip)">{segments_svg}</g>
-  <text x="{lang_bar_x}" y="{lang_bar_y - 10}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="{text_main}">Languages</text>
 '''
 
 # ---------------------------------------------------------------------------
@@ -343,7 +350,7 @@ start = today - timedelta(days=today.weekday())  # this week's Monday
 start -= timedelta(weeks=weeks_back - 1)
 max_count = max([v for v in day_map.values()] + [1])
 
-heat_x0, heat_y0 = W - 46 - weeks_back * (11 + 2), 48
+heat_x0, heat_y0 = W - 46 - weeks_back * (11 + 2), 32
 cell = 11
 gap = 2
 heat_svg = ""
@@ -376,16 +383,68 @@ for w in range(weeks_back):
 # ---------------------------------------------------------------------------
 # Assemble final SVG
 # ---------------------------------------------------------------------------
-avatar_block = ""
-if avatar_data_uri:
-    avatar_block = f'''
-  <clipPath id="avatarClip"><circle cx="72" cy="86" r="40"/></clipPath>
-  <image href="{avatar_data_uri}" x="32" y="46" width="80" height="80" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>
-  <circle cx="72" cy="86" r="41" fill="none" stroke="url(#accent)" stroke-width="3"/>
+profile_card_bg = tile_bg if THEME == "dark" else "#ffffff"
+profile_card_stroke = stroke
+
+activity_box_x, activity_box_y = 32, 360
+activity_box_w, activity_box_h = 560, 320
+
+lang_box_x, lang_box_y = 620, 360
+lang_box_w, lang_box_h = W - lang_box_x - 32, 320
+
+# Activity Overview tiles data
+activity_data = [
+    ("commit", "Commits", commit_count),
+    ("pr", "Pull Requests", pr_count),
+    ("issue", "Issues", issue_count),
+    ("review", "Code Reviews", review_count),
+    ("flame", "Current Streak", commit_streak),
+    ("trophy", "Longest Streak", longest_streak),
+]
+
+activity_tile_w = (activity_box_w - 54 - 14) / 2
+activity_tile_h = 80
+activity_svg = ""
+for i, (ic, label, value) in enumerate(activity_data):
+    col, row = i % 2, i // 2
+    x = activity_box_x + 16 + col * (activity_tile_w + 14)
+    y = activity_box_y + 44 + row * (activity_tile_h + 14)
+    activity_svg += f'''
+  <rect x="{x}" y="{y}" width="{activity_tile_w}" height="{activity_tile_h}" rx="8" fill="{profile_card_bg}" stroke="none"/>
+  {icon(ic, x + 22, y + activity_tile_h/2, 16, accent_start)}
+  <text x="{x + 38}" y="{y + activity_tile_h/2 - 8}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">{esc(label)}</text>
+  <text x="{x + 38}" y="{y + activity_tile_h/2 + 14}" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="{text_main}">{esc(value)}</text>
 '''
-    name_x = 130
-else:
-    name_x = 32
+
+# Profile section
+profile_section = f'''
+  <!-- Profile Card -->
+  <rect x="{profile_x}" y="{profile_y}" width="{profile_w}" height="{profile_h}" rx="12" fill="{profile_card_bg}" stroke="{profile_card_stroke}" stroke-width="1"/>
+'''
+
+if avatar_data_uri:
+    profile_section += f'''
+  <clipPath id="avatarClip"><circle cx="{profile_x + profile_w/2}" cy="{profile_y + 50}" r="35"/></clipPath>
+  <image href="{avatar_data_uri}" x="{profile_x + profile_w/2 - 35}" y="{profile_y + 15}" width="70" height="70" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatarClip)"/>
+  <circle cx="{profile_x + profile_w/2}" cy="{profile_y + 50}" r="36" fill="none" stroke="url(#accent)" stroke-width="2.5"/>
+'''
+
+profile_section += f'''
+  <text x="{profile_x + profile_w/2}" y="{profile_y + 110}" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="{text_main}" text-anchor="middle">{esc(USERNAME)}</text>
+  <text x="{profile_x + profile_w/2}" y="{profile_y + 135}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}" text-anchor="middle">Rohit Singh</text>
+  {icon("people", profile_x + 16, profile_y + 160, 14, text_subtle)}
+  <text x="{profile_x + 32}" y="{profile_y + 165}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">India</text>
+  {icon("commit", profile_x + 16, profile_y + 190, 14, text_subtle)}
+  <text x="{profile_x + 32}" y="{profile_y + 195}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">Joined Jan 7, 2021</text>
+  <text x="{profile_x + 14}" y="{profile_y + 225}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">AI/ML Engineer passionate</text>
+  <text x="{profile_x + 14}" y="{profile_y + 240}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">about building intelligent</text>
+  <text x="{profile_x + 14}" y="{profile_y + 255}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">systems and developer tools.</text>
+'''
+
+# Contributions header
+heat_header = f'''
+  <text x="{heat_x0}" y="{heat_y0-20}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="{text_main}">Contributions</text>
+'''
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub profile statistics for {esc(USERNAME)}">
   <defs>
@@ -397,53 +456,51 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
       <stop offset="0%" stop-color="{accent_start}"/>
       <stop offset="100%" stop-color="{accent_end}"/>
     </linearGradient>
-    {avatar_block}
   </defs>
 
   <rect width="{W}" height="{H}" rx="18" fill="url(#bg)"/>
   <rect x="10" y="10" width="{W-20}" height="{H-20}" rx="16" fill="{card_bg}" stroke="{stroke}" stroke-width="1"/>
-  <rect x="30" y="28" width="140" height="5" rx="2.5" fill="url(#accent)"/>
 
-  <text x="{name_x}" y="70" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="{text_main}">{esc(USERNAME)}</text>
-  <text x="{name_x}" y="96" font-family="Segoe UI, Arial, sans-serif" font-size="13.5" fill="{text_subtle}">github.com/{esc(USERNAME)}</text>
+  {profile_section}
 
-  {icon("flame", name_x + 12, 122, 16, "#f97316")}
-  <text x="{name_x + 26}" y="127" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="{text_main}"><tspan font-weight="700">{commit_streak}</tspan> day streak</text>
-
-  {icon("trophy", name_x + 145, 122, 16, "#facc15")}
-  <text x="{name_x + 160}" y="127" font-family="Segoe UI, Arial, sans-serif" font-size="13" fill="{text_main}"><tspan font-weight="700">{longest_streak}</tspan> day best</text>
-
-  <rect
-      x="{heat_x0-12}"
-      y="{heat_y0-12}"
-      width="{weeks_back*(cell+gap)+24}"
-      height="118"
-      rx="12"
-      fill="{tile_bg}"
-      opacity="0.55"
-      stroke="{stroke}"/>
+  {heat_header}
+  
+  <!-- Contributions calendar background -->
+  <rect x="{heat_x0-20}" y="{heat_y0-28}" width="{weeks_back*(cell+gap)+40}" height="130" rx="10" fill="{tile_bg}" stroke="{stroke}" stroke-width="1"/>
 
   <!-- Month labels -->
-  <text x="{heat_x0}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Mar</text>
-  <text x="{heat_x0+52}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Apr</text>
-  <text x="{heat_x0+104}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">May</text>
-  <text x="{heat_x0+156}" y="{heat_y0-16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">Jun</text>
+  <text x="{heat_x0}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Mar</text>
+  <text x="{heat_x0+52}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Apr</text>
+  <text x="{heat_x0+104}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">May</text>
+  <text x="{heat_x0+156}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Jun</text>
+  <text x="{heat_x0+208}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Jul</text>
+  <text x="{heat_x0+260}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Aug</text>
 
   <!-- Weekday labels -->
-  <text x="{heat_x0-18}" y="{heat_y0+11}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">M</text>
-  <text x="{heat_x0-18}" y="{heat_y0+37}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">W</text>
-  <text x="{heat_x0-18}" y="{heat_y0+63}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">F</text>
+  <text x="{heat_x0-16}" y="{heat_y0+13}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">M</text>
+  <text x="{heat_x0-16}" y="{heat_y0+39}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">W</text>
+  <text x="{heat_x0-16}" y="{heat_y0+65}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">F</text>
 
   {heat_svg}
+  
+  <!-- Legend -->
+  <text x="{heat_x0}" y="{heat_y0+100}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">Less</text>
+  <text x="{heat_x0+420}" y="{heat_y0+100}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">More</text>
 
-  <line x1="30" y1="152" x2="{W-30}" y2="152" stroke="none"/>
-
-  <text x="{grid_x0}" y="178" font-family="Segoe UI, Arial, sans-serif" font-size="12" font-weight="600" fill="{text_subtle}">OVERVIEW</text>
+  <!-- Stats cards -->
   {tiles_svg}
 
-  <text x="{grid_x0}" y="{grid_y0 + rows*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="700" fill="{text_main}">{total_contributions:,}</text>
-  <text x="{grid_x0 + 100}" y="{grid_y0 + rows*(tile_h+gap) + 26}" font-family="Segoe UI, Arial, sans-serif" font-size="12.5" fill="{text_subtle}">total contributions in the last year</text>
+  <!-- Activity Overview section -->
+  <rect x="{activity_box_x}" y="{activity_box_y}" width="{activity_box_w}" height="{activity_box_h}" rx="12" fill="{profile_card_bg}" stroke="{profile_card_stroke}" stroke-width="1"/>
+  {icon("commit", activity_box_x + 36, activity_box_y + 22, 18, accent_start)}
+  <text x="{activity_box_x + 56}" y="{activity_box_y + 30}" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="{text_main}">Activity Overview</text>
+  {activity_svg}
 
+  <!-- Languages section -->
+  <rect x="{lang_box_x}" y="{lang_box_y}" width="{lang_box_w}" height="{lang_box_h}" rx="12" fill="{profile_card_bg}" stroke="{profile_card_stroke}" stroke-width="1"/>
+  {icon("commit", lang_box_x + 36, lang_box_y + 22, 18, accent_start)}
+  <text x="{lang_box_x + 56}" y="{lang_box_y + 30}" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="{text_main}">Languages</text>
+  
   {lang_bar_svg}
   {legend_svg}
 </svg>'''
