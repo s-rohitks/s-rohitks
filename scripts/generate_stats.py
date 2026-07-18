@@ -284,26 +284,31 @@ tiles_data = [
     ("gist", "Gists", public_gists),
 ]
 
-# Left side profile area
-profile_x, profile_y = 32, 32
-profile_w, profile_h = 220, 280
+# Layout and spacing
+padding = 32
+profile_x, profile_y = padding, padding
+profile_w, profile_h = 300, 300
+profile_card_bg = tile_bg if THEME == "dark" else "#ffffff"
+profile_card_stroke = stroke
 
-# Bottom sections (Activity Overview and Languages)
-activity_box_x, activity_box_y = 32, 360
-activity_box_w, activity_box_h = 560, 320
+contrib_x = profile_x + profile_w + 24
+contrib_y = profile_y
+contrib_w = W - contrib_x - padding
+contrib_h = profile_h
 
-lang_box_x, lang_box_y = 620, 360
-lang_box_w, lang_box_h = W - lang_box_x - 32, 320
-grid_x0, grid_y0 = 280, 32
+stats_y = profile_y + profile_h + 20
+stats_box_x = padding
+stats_box_w = W - 2 * padding
+stats_box_h = 180
 cols, rows = 3, 2
-gap = 14
-tile_w = (W - 280 - 32 - gap * (cols - 1)) / cols
-tile_h = 110
+gap = 12
+tile_w = (stats_box_w - gap * (cols - 1)) / cols
+tile_h = 72
 tiles_svg = ""
 for i, (ic, label, value) in enumerate(tiles_data):
     col, row = i % cols, i // cols
-    x = grid_x0 + col * (tile_w + gap)
-    y = grid_y0 + row * (tile_h + gap)
+    x = stats_box_x + col * (tile_w + gap)
+    y = stats_y + row * (tile_h + gap)
     tiles_svg += tile(x, y, tile_w, tile_h, ic, label, value)
 
 # ---------------------------------------------------------------------------
@@ -312,43 +317,50 @@ for i, (ic, label, value) in enumerate(tiles_data):
 top_langs = sorted(languages_totals.items(), key=lambda kv: kv[1], reverse=True)[:5]
 total_lang_size = sum(v for _, v in top_langs) or 1
 
-lang_bar_h = 16
+lang_bar_h = 11
 segments_svg = ""
 lang_bar_cursor = 0
 legend_svg = ""
-legend_x, legend_y = lang_box_x + 32, lang_box_y + 70
+lang_box_x, lang_box_y = 600, 520
+lang_box_w, lang_box_h = W - lang_box_x - 32, 146
+bar_x, bar_y = lang_box_x + 24, lang_box_y + 54
+bar_w = lang_box_w - 52
+legend_start_x = lang_box_x + 24
+legend_start_y = lang_box_y + 76
+legend_gap = 16
+lang_header_svg = f'''
+  <text x="{lang_box_x + 24}" y="{lang_box_y + 34}" font-family="Segoe UI, Arial, sans-serif" font-size="11.5" font-weight="700" fill="{text_main}">Languages</text>
+'''
 for i, (name, size) in enumerate(top_langs):
     pct = size / total_lang_size
-    seg_w = pct * (lang_box_w - 64)
+    seg_w = pct * bar_w
     color = lang_color(name, i)
-    segments_svg += f'<rect x="{lang_box_x + 32 + lang_bar_cursor:.1f}" y="{lang_box_y + 50}" width="{max(seg_w,2):.1f}" height="{lang_bar_h}" fill="{color}"/>'
+    segments_svg += f'<rect x="{bar_x + lang_bar_cursor:.1f}" y="{bar_y}" width="{max(seg_w,2):.1f}" height="{lang_bar_h}" fill="{color}"/>'
     lang_bar_cursor += seg_w
-    lx = legend_x + i * 150
-    ly = legend_y
+    lx = legend_start_x
+    ly = legend_start_y + i * legend_gap
     legend_svg += f'''
-  <circle cx="{lx+5}" cy="{ly-4}" r="5" fill="{color}"/>
-  <text x="{lx+16}" y="{ly}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_main}">{esc(name)}</text>
-  <text x="{lx+16}" y="{ly+15}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">{pct*100:.1f}% {size:,} bytes</text>
+  <rect x="{lx}" y="{ly-6}" width="7" height="7" rx="2" fill="{color}"/>
+  <text x="{lx+11}" y="{ly}" font-family="Segoe UI, Arial, sans-serif" font-size="8" fill="{text_main}">{esc(name)}</text>
+  <text x="{lx+11}" y="{ly+8}" font-family="Segoe UI, Arial, sans-serif" font-size="7" fill="{text_subtle}">{pct*100:.1f}% • {size:,} bytes</text>
 '''
-# clip the whole bar to rounded corners
 lang_bar_svg = f'''
-  <rect x="{lang_box_x + 32}" y="{lang_box_y + 50}" width="{lang_box_w - 64}" height="{lang_bar_h}" rx="6" fill="{tile_bg}" stroke="none"/>
-  <clipPath id="langClip"><rect x="{lang_box_x + 32}" y="{lang_box_y + 50}" width="{lang_box_w - 64}" height="{lang_bar_h}" rx="6"/></clipPath>
+  <rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="{lang_bar_h}" rx="8" fill="{tile_bg}" stroke="{stroke}" stroke-width="0.8"/>
+  <clipPath id="langClip"><rect x="{bar_x}" y="{bar_y}" width="{bar_w}" height="{lang_bar_h}" rx="8"/></clipPath>
   <g clip-path="url(#langClip)">{segments_svg}</g>
 '''
 
 # ---------------------------------------------------------------------------
-# Mini contribution heatmap (last ~18 weeks)
+# Mini contribution heatmap (last ~16 weeks)
 # ---------------------------------------------------------------------------
 day_map = {datetime.strptime(d["date"], "%Y-%m-%d").date(): d["contributionCount"] for d in days}
 today = date.today()
-weeks_back = 18
-start = today - timedelta(days=today.weekday())  # this week's Monday
+weeks_back = 16
+start = today - timedelta(days=today.weekday())
 start -= timedelta(weeks=weeks_back - 1)
-max_count = max([v for v in day_map.values()] + [1])
 
-heat_x0, heat_y0 = W - 46 - weeks_back * (11 + 2), 32
-cell = 11
+heat_x0, heat_y0 = contrib_x + 24, contrib_y + 80
+cell = 10
 gap = 2
 heat_svg = ""
 for w in range(weeks_back):
@@ -380,37 +392,28 @@ for w in range(weeks_back):
 # ---------------------------------------------------------------------------
 # Assemble final SVG
 # ---------------------------------------------------------------------------
-profile_card_bg = tile_bg if THEME == "dark" else "#ffffff"
-profile_card_stroke = stroke
+activity_box_x, activity_box_y = 32, 520
+activity_box_w, activity_box_h = 560, 138
 
-activity_box_x, activity_box_y = 32, 360
-activity_box_w, activity_box_h = 560, 320
+lang_box_x, lang_box_y = 620, 520
+lang_box_w, lang_box_h = W - lang_box_x - 32, 160
 
-lang_box_x, lang_box_y = 620, 360
-lang_box_w, lang_box_h = W - lang_box_x - 32, 320
-
-# Activity Overview tiles data
 activity_data = [
     ("commit", "Commits", commit_count),
     ("pr", "Pull Requests", pr_count),
     ("issue", "Issues", issue_count),
     ("review", "Code Reviews", review_count),
-    ("flame", "Current Streak", commit_streak),
-    ("trophy", "Longest Streak", longest_streak),
 ]
-
-activity_tile_w = (activity_box_w - 54 - 14) / 2
-activity_tile_h = 80
 activity_svg = ""
 for i, (ic, label, value) in enumerate(activity_data):
     col, row = i % 2, i // 2
-    x = activity_box_x + 16 + col * (activity_tile_w + 14)
-    y = activity_box_y + 44 + row * (activity_tile_h + 14)
+    x = activity_box_x + 16 + col * 260
+    y = activity_box_y + 44 + row * 44
     activity_svg += f'''
-  <rect x="{x}" y="{y}" width="{activity_tile_w}" height="{activity_tile_h}" rx="8" fill="{profile_card_bg}" stroke="none"/>
-  {icon(ic, x + 22, y + activity_tile_h/2, 16, accent_start)}
-  <text x="{x + 38}" y="{y + activity_tile_h/2 - 8}" font-family="Segoe UI, Arial, sans-serif" font-size="11" fill="{text_subtle}">{esc(label)}</text>
-  <text x="{x + 38}" y="{y + activity_tile_h/2 + 14}" font-family="Segoe UI, Arial, sans-serif" font-size="18" font-weight="700" fill="{text_main}">{esc(value)}</text>
+  <rect x="{x}" y="{y}" width="240" height="34" rx="8" fill="{profile_card_bg}" stroke="{stroke}" stroke-width="0.8"/>
+  {icon(ic, x + 20, y + 17, 13, accent_start)}
+  <text x="{x + 40}" y="{y + 16}" font-family="Segoe UI, Arial, sans-serif" font-size="10.5" fill="{text_subtle}">{esc(label)}</text>
+  <text x="{x + 40}" y="{y + 30}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="700" fill="{text_main}">{esc(value)}</text>
 '''
 
 # Profile section
@@ -440,7 +443,7 @@ profile_section += f'''
 
 # Contributions header
 heat_header = f'''
-  <text x="{heat_x0}" y="{heat_y0-20}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="{text_main}">Contributions</text>
+  <text x="{heat_x0}" y="{contrib_y + 34}" font-family="Segoe UI, Arial, sans-serif" font-size="13" font-weight="600" fill="{text_main}">Contributions</text>
 '''
 
 svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}" role="img" aria-label="GitHub profile statistics for {esc(USERNAME)}">
@@ -460,29 +463,13 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
 
   {profile_section}
 
+  <rect x="{contrib_x}" y="{contrib_y}" width="{contrib_w}" height="{contrib_h}" rx="12" fill="{profile_card_bg}" stroke="{profile_card_stroke}" stroke-width="1"/>
   {heat_header}
-  
-  <!-- Contributions calendar background -->
-  <rect x="{heat_x0-20}" y="{heat_y0-28}" width="{weeks_back*(cell+gap)+40}" height="130" rx="10" fill="{tile_bg}" stroke="{stroke}" stroke-width="1"/>
-
-  <!-- Month labels -->
-  <text x="{heat_x0}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Mar</text>
-  <text x="{heat_x0+52}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Apr</text>
-  <text x="{heat_x0+104}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">May</text>
-  <text x="{heat_x0+156}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Jun</text>
-  <text x="{heat_x0+208}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Jul</text>
-  <text x="{heat_x0+260}" y="{heat_y0-8}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Aug</text>
-
-  <!-- Weekday labels -->
-  <text x="{heat_x0-16}" y="{heat_y0+13}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">M</text>
-  <text x="{heat_x0-16}" y="{heat_y0+39}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">W</text>
-  <text x="{heat_x0-16}" y="{heat_y0+65}" font-family="Segoe UI, Arial, sans-serif" font-size="9.5" fill="{text_subtle}">F</text>
-
+  <rect x="{contrib_x + 20}" y="{contrib_y + 44}" width="{contrib_w - 40}" height="126" rx="10" fill="{tile_bg}" stroke="{stroke}" stroke-width="1"/>
   {heat_svg}
-  
-  <!-- Legend -->
-  <text x="{heat_x0}" y="{heat_y0+100}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">Less</text>
-  <text x="{heat_x0+420}" y="{heat_y0+100}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">More</text>
+  <text x="{contrib_x + 24}" y="{contrib_y + 58}" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="{text_subtle}">Last 16 weeks</text>
+  <text x="{contrib_x + 24}" y="{contrib_y + 264}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">Less</text>
+  <text x="{contrib_x + contrib_w - 70}" y="{contrib_y + 264}" font-family="Segoe UI, Arial, sans-serif" font-size="9" fill="{text_subtle}">More</text>
 
   <!-- Stats cards -->
   {tiles_svg}
@@ -495,9 +482,8 @@ svg = f'''<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewB
 
   <!-- Languages section -->
   <rect x="{lang_box_x}" y="{lang_box_y}" width="{lang_box_w}" height="{lang_box_h}" rx="12" fill="{profile_card_bg}" stroke="{profile_card_stroke}" stroke-width="1"/>
-  {icon("commit", lang_box_x + 36, lang_box_y + 22, 18, accent_start)}
-  <text x="{lang_box_x + 56}" y="{lang_box_y + 30}" font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="{text_main}">Languages</text>
-  
+  {icon("repo", lang_box_x + 36, lang_box_y + 22, 18, accent_start)}
+  {lang_header_svg}
   {lang_bar_svg}
   {legend_svg}
 </svg>'''
