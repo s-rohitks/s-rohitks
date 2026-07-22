@@ -13,10 +13,10 @@
 
 ## About Me 
 
-🟦 SAP S/4HANA ABAP & Fiori Developer at **International Tractors Limited**, Punjab, India — **4+ years** of experience across CDS, OData, SAPUI5/Fiori, and BTP Launchpad configuration.
-🟩 I build CDS-backed OData services, transactional and analytical Fiori apps, and configure Launchpad roles/catalogs end to end.
-🟨 Exposure to RAP and ABAP Cloud concepts, with a focus on clean-core aligned development.
-
+🟦 SAP S/4HANA ABAP & Fiori Developer at **International Tractors Limited**, Punjab, India  
+**4+ years** of experience across CDS, OData, SAPUI5/Fiori, and BTP Launchpad configuration.  
+🟩 I build CDS-backed OData services, transactional and analytical Fiori apps, <br> and configure Launchpad roles/catalogs end to end.  
+🟨 Exposure to RAP and ABAP Cloud concepts, with a focus on clean-core aligned development.  
 - 💼 Current: **SAP S/4HANA ABAP & Fiori Developer** — International Tractors Limited (May 2025 – Present)
 - 📍 Previously: **SAP ABAP Developer** — Wipro, Greater Noida (May 2022 – Apr 2025)
 - 🎓 B.Tech, Computer Science — A.K.T.U. (2018 – 2022)
