@@ -44,7 +44,6 @@
 - Developed, deployed, and maintained applications across SAP BTP and on-premise environments.
 
 ### SAP ABAP Developer — Wipro, Greater Noida *(May 2022 – Apr 2025)*
-- Built a Fiori app for Purchase Requisition (PR) sign-offs as part of Form Automation Phase 2, enabling multi-level approval workflows.
 - Designed and consumed OData V2 services and CDS views to power Fiori apps; created custom annotations for Fiori Elements.
 - Configured Fiori Launchpad roles, tiles, and catalogs for application access across user groups.
 - Gained end-to-end SDLC experience: requirements gathering, development, unit testing, transport management, and UAT support.
